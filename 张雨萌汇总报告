@@ -118,21 +118,6 @@ std::vector<uint32_t> SM3::sm3_hash_optimize()
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 *Project5: Impl Merkle Tree following RFC6962
 #一、代码说明
 以sm3的散列模块为基础，用C++代码实现了默克尔树，可以手动输入数据，默克尔树叶节点会生成相应的哈希值，非叶节点会生成相应的联结哈希值。
@@ -144,8 +129,7 @@ std::vector<uint32_t> SM3::sm3_hash_optimize()
 #三、软件环境：Visual Studio 20
 
 
-
-#五、部分代码
+#四、部分代码
 //默克尔树类
 template<class T>
 class MerkleTree {
@@ -381,13 +365,6 @@ s2 = k^(-1) * (e2 + dr) mod n
 
 
 
-
-
-
-
-
-
-
 *Project14: Implement a PGP scheme with SM2
 #一、PGP概念
 PGP（Pretty Good Privacy）加密，由一系列散列、数据压缩、对称密钥加密，以及公钥加密的算法组合而成，每个步骤支持几种算法。PGP支持消息认证和完整性检测：
@@ -398,22 +375,22 @@ PGP（Pretty Good Privacy）加密，由一系列散列、数据压缩、对称�
 #二、举例说明
 假设在一个数据M传输的过程中，发送者为A 、接受者为B ，公私钥对(pk, rk)，会话密钥s k 
 散列函数（哈希函数）用H 代替，公钥密码算法以R S A 为例，对称加密算法以A E S 为例:
-1️⃣、数据经过散列处理H形成摘要：
+1️、数据经过散列处理H形成摘要：
 H ( M )
 
-2️⃣、用公钥密码算法R S A RSARSA对摘要数字签名：
+2️、用公钥密码算法R S A RSARSA对摘要数字签名：
 s i g R S A − r k A ( H ( M ) ) 
 
-3️⃣、链接数据与数字签名得到证书，（并进行压缩，压缩可省略）：
+3️、链接数据与数字签名得到证书，（并进行压缩，压缩可省略）：
 s i g R S A − r k A ( H ( M ) ) ∣ ∣ M 
 
-4️⃣、对称加密算法A E S AESAES加密前一步得到的证书：
+4️、对称加密算法A E S AESAES加密前一步得到的证书：
 A E S s k ( s i g R S A − r k A ( H ( M ) ) ∣ ∣ M ) 
 
-5️⃣、公钥密码算法R S A RSARSA构造数字信封，封装密钥：
+5️、公钥密码算法R S A RSARSA构造数字信封，封装密钥：
 R S A p k B ( s k ) RSA_{pk_B}(sk)
 
-6️⃣、链接，完成PGP加密：
+6️、链接，完成PGP加密：
 R S A p k B ( s k ) ∣ ∣ A E S s k ( s i g R S A − r k A ( H ( M ) ) ∣ ∣ M ) 
 除了上述利用H 、 R S A 、 A E S H、RSA、AESH、RSA、AES的PGP加密原理应用，还可以用S M 2 、 S M 3 、 S M 4 SM2、SM3、SM4SM2、SM3、SM4构建一个同样具有机密性和认证服务的文件传输方案:
  
@@ -466,7 +443,6 @@ implement sm2 2P decrypt with real network communication
 2. 生成私钥d2并计算公钥P = [(d1d2)^-1 - 1] * G         
 3. 这里Server端自己生成密文并将密文返回给client         
 4. 与client进行交互共同解密:接收client发送的T1并返回T2给client             
-
 (二)Client端:       
 1. 生成私钥d1以及P1 = d1^-1 * G          
 2. 接收密文           
@@ -497,7 +473,6 @@ implement sm2 2P decrypt with real network communication
 1.post提交的密码是加密的,不会有被抓包解析出来的危险;
 2.火狐也会自动记录正确未加密的密码;
 3.密码自动填充,也会准确找到显示B密码框,不会填充到A中,导致每次还要手动选择密码;
-
 #二、firefox记住密码插件部分源码
 <?xml version="1.0" encoding="UTF-8"?>
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
@@ -525,7 +500,6 @@ implement sm2 2P decrypt with real network communication
     </em:targetApplication>
   </Description>
 </RDF>
-
 #三、谷歌记住密码插件
 ShowPassword是一款能够显示出当前密码框中的密码的谷歌浏览器插件，在用户输入密码的时候，如果忘记了当前已经输入的密码，或者不确定输入的密码是否正确的情况下，就可以使用ShowPassword插件来临时查看一下当前的密码。
 还有一种情况是，用户如果使用的谷歌浏览器的记住密码功能，在网站上输入密码的地方，谷歌浏览器会自动帮助用户填上帐号和密码，但是久而久之，用户就会因为长时间没有操作过，而忘记当前网站中的密码，这时候，如果使用ShowPassword插件，就可以临时查看一下当前密码框中的密码，来用户一个提醒的作用。
@@ -533,20 +507,21 @@ ShowPassword的使用方法:
 1.	在谷歌浏览器中安装ShowPassword插件，并在Chrome的扩展器中启动显示密码的功能，ShowPassword插件的下载地址可以在本文的下方找到，离线ShowPassword插件的安装方法可参考：怎么在谷歌浏览器中安装.crx扩展名的离线Chrome插件？
 2.	安装完成以后，用户就可以使用Chrome打开需要输入帐号和密码的网站，在密码框中输入一定的字符以后，把鼠标放在密码框500毫秒以后，该密码框就会把密码以明文的方式显示出来
 
+
+
 *Project18: send a tx on Bitcoin testnet, and parse the tx data down to every bit, better write script yourself
+
 
 
 *Project19: forge a signature to pretend that you are Satoshi
 #一、实验内容
 本实验实现了当ECDSA验签算法在不验证m的情况下,能够通过公钥来伪造合法签名
-
 #二、攻击原理
 1. 在 Fn* 上随机选择u,v,计算R = (x,y) = uG + vP   (P为公钥)                 
 2. r = x mod n       
 3. e = ruv^-1 mod n          
 4. s = rv^-1 mod n      
 5. signature = (r,s)
-
 #三、攻击前提
  验签算法:不验证消息m        
 e * s^-1 * G + r * s^-1 * P = kG = R             
@@ -557,10 +532,8 @@ e * s^-1 * G + r * s^-1 * P = kG = R
 *Project20: ECMH PoC
 #一、概念
 PoC即Proof of Capacity，也就是容量证明。PoC也被称作空间证明，是PoW共识机制的升级版。主要就是通过数据预生成后检索的算法，这使得整个系统比PoW更加快速，PoC仅需在数分钟内生成新区块，而PoW需要10分钟。相比PoW是通过计算来获取区块的打包权，PoC则是将“计算”变成了“寻找”。
-
 整个记账权的争取过程如下：
 在挖矿还没开始前，网络就会把破解谜题的计算方法（solutions）储存在硬盘空间里。这些计算方法有的比较快，有的比较慢，如果你的硬盘里恰好有一个计算方法，是目前最近产生的这个区块里的谜题所对应的“最快解”，那么你就赢得了这个区块的记账权——挖矿的奖励就是你的了。如果你在硬盘空间里拥有越多的计算方法（也被称为plots），你用最快的速度去破解当前这个区块的谜题，实现的概率也就越大。
- 
 PoC共识机制下的挖矿被称为硬盘挖矿，从最早的Burst到大火的IPFS，再到7月的BHD，还有现在的BSN，每一个PoC共识下的项目都会被市场追捧和追随。BSN被誉为PoC算法中的新比特。
 PoC共识机制虽然不具备完全取代PoW挖矿的可能性，但是，它的确是代表了矿业新的探索方向。
 
@@ -578,12 +551,8 @@ PoC共识机制虽然不具备完全取代PoW挖矿的可能性，但是，它�
 *Project21: Schnorr Bacth
 一、基本知识
 Schnorr签名算法最初是由德国密码学家ClausSchnorr于2008年提出的，在密码学中，它是一种数字签名方案，以其简单高效著称，其安全性基于某些离散对数问题的难处理性。
-
 密码学中，常用以下形式的椭圆曲线： E: y^2= x^3+ax+b(mod\ p) 同时要求 4a^3+27b^2 ≠0。其中p为一个大素数，a、b、x和y均在有限域 GF(p)中，即从{0,1,···,p-1\}中取值。该曲线常用E_{p}(a,b)表示。若该曲线上只有有限个离散点，设为N个，则椭圆曲线的阶为N。N越大，椭圆曲线安全性越高。椭圆曲线的阶可通过schoof算法计算求得。
 椭圆曲线 E: y^2= x^3-x +1图形如下：
-
- 
-
 加法规则
 椭圆曲线E_{p}(a,b)在如下定义的加法规则构成Abel群（交换群）。
  Ο + Ο = Ο
@@ -591,7 +560,6 @@ Schnorr签名算法最初是由德国密码学家ClausSchnorr于2008年提出的
 ∀P=(x,y)∈E_{p}(a,b)，有 P + (-P) =Ο，P的逆为 -P = (x,-y)
 ∀P=(x_{1},y_{1}),Q=(x_{2},y_{2})∈E_{p}(a,b)，则 P + Q = R = (x_{3},y_{3})∈E_{p}(a,b)
 其中x_3=λ^2-x_1-x_2 ,y_3=λ(x_1-x_3 )-y_1
-
 乘法规则
 ∀k∈Z,∀P∈E_p (a,b)，有 kP=P+···+P(k个P相加)；
 ∀s,t∈Z, ∀P∈E_p (a,b)，有 (s+t)P=sP+tP,s(tP)=(st)P
@@ -641,6 +609,7 @@ Merkle树是由计算机科学家 Ralph Merkle 在很多年前提出的，并以
 默克尔树的特点之一就是当树节点内容发生变化时，能够在前一次哈希计算的基础上，仅仅将被修改的树节点进行哈希重计算，便能得到一个新的根哈希用来代表整棵树的状态。
 2轻节点扩展：
 采用默克尔树，可以在公链环境下扩展一种“轻节点”。轻节点的特点是对于每个区块，仅仅需要存储约80个字节大小的区块头数据，而不存储交易列表，回执列表等数据。然而通过轻节点，可以实现在非信任的公链环境中验证某一笔交易是否被收录在区块链账本的功能。这使得像比特币，以太坊这样的区块链能够运行在个人PC，智能手机等拥有小存储容量的终端上。
+
 劣势：
 1存储空间开销大：
 
