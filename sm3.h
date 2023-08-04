@@ -1,4 +1,5 @@
 #pragma once
+#include "transform.h"
 #include <iostream>
 #include <string>
 #include <cmath>
@@ -26,17 +27,17 @@ string padding(string str) {
 	for (int i = 0; i < str.size(); i++) {
 		res += DecToHex((int)str[i]);
 	}
-	/*cout << "string ASCII is:" << endl;
+	//cout << "string ASCII is:" << endl;
 	for (int i = 0; i < res.size(); i++) {
-		cout << res[i];
+		//cout << res[i];
 		if ((i + 1) % 8 == 0) {
-			cout << "  ";
+			//cout << "  ";
 		}
 		if ((i + 1) % 64 == 0 || (i + 1) == res.size()) {
-			cout << endl;
+			//cout << endl;
 		}
 	}
-	cout << endl;*/
+	//cout << endl;
 	int res_length = res.size() * 4;
 	//根据sm3填充规则,在获得的数据后面添1，在16进制下相当于是添加8
 	res += "8";
@@ -155,7 +156,6 @@ string P0(string str) {
 }
 
 string T(int j) {
-	//常量
 	if (0 <= j && j <= 15) {
 		return "79CC4519";
 	}
@@ -188,231 +188,25 @@ string extension(string str) {
 	}
 	//cout << "after extension:" << endl;
 	//cout << "W0,W1,……,W67：" << endl;
-	//循环展开
-	/*
-	cout << res.substr(0 + 0, 8) << "  ";
-	cout << res.substr(0 + 8, 8) << "  ";
-	cout << res.substr(0 + 16, 8) << "  ";
-	cout << res.substr(0 + 24, 8) << "  ";
-	cout << res.substr(0 + 32, 8) << "  ";
-	cout << res.substr(0 + 40, 8) << "  ";
-	cout << res.substr(0 + 48, 8) << "  ";
-	cout << res.substr(0 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(64 + 0, 8) << "  ";
-	cout << res.substr(64 + 8, 8) << "  ";
-	cout << res.substr(64 + 16, 8) << "  ";
-	cout << res.substr(64 + 24, 8) << "  ";
-	cout << res.substr(64 + 32, 8) << "  ";
-	cout << res.substr(64 + 40, 8) << "  ";
-	cout << res.substr(64 + 48, 8) << "  ";
-	cout << res.substr(64 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(128 + 0, 8) << "  ";
-	cout << res.substr(128 + 8, 8) << "  ";
-	cout << res.substr(128 + 16, 8) << "  ";
-	cout << res.substr(128 + 24, 8) << "  ";
-	cout << res.substr(128 + 32, 8) << "  ";
-	cout << res.substr(128 + 40, 8) << "  ";
-	cout << res.substr(128 + 48, 8) << "  ";
-	cout << res.substr(128 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(192 + 0, 8) << "  ";
-	cout << res.substr(192 + 8, 8) << "  ";
-	cout << res.substr(192 + 16, 8) << "  ";
-	cout << res.substr(192 + 24, 8) << "  ";
-	cout << res.substr(192 + 32, 8) << "  ";
-	cout << res.substr(192 + 40, 8) << "  ";
-	cout << res.substr(192 + 48, 8) << "  ";
-	cout << res.substr(192 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(256 + 0, 8) << "  ";
-	cout << res.substr(256 + 8, 8) << "  ";
-	cout << res.substr(256 + 16, 8) << "  ";
-	cout << res.substr(256 + 24, 8) << "  ";
-	cout << res.substr(256 + 32, 8) << "  ";
-	cout << res.substr(256 + 40, 8) << "  ";
-	cout << res.substr(256 + 48, 8) << "  ";
-	cout << res.substr(256 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(320 + 0, 8) << "  ";
-	cout << res.substr(320 + 8, 8) << "  ";
-	cout << res.substr(320 + 16, 8) << "  ";
-	cout << res.substr(320 + 24, 8) << "  ";
-	cout << res.substr(320 + 32, 8) << "  ";
-	cout << res.substr(320 + 40, 8) << "  ";
-	cout << res.substr(320 + 48, 8) << "  ";
-	cout << res.substr(320 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(384 + 0, 8) << "  ";
-	cout << res.substr(384 + 8, 8) << "  ";
-	cout << res.substr(384 + 16, 8) << "  ";
-	cout << res.substr(384 + 24, 8) << "  ";
-	cout << res.substr(384 + 32, 8) << "  ";
-	cout << res.substr(384 + 40, 8) << "  ";
-	cout << res.substr(384 + 48, 8) << "  ";
-	cout << res.substr(384 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(448 + 0, 8) << "  ";
-	cout << res.substr(448 + 8, 8) << "  ";
-	cout << res.substr(448 + 16, 8) << "  ";
-	cout << res.substr(448 + 24, 8) << "  ";
-	cout << res.substr(448 + 32, 8) << "  ";
-	cout << res.substr(448 + 40, 8) << "  ";
-	cout << res.substr(448 + 48, 8) << "  ";
-	cout << res.substr(448 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(512, 8) << "  " << res.substr(520, 8) << "  " << res.substr(528, 8) << "  " << res.substr(536, 8) << endl;
-	cout << endl;
-	*/
-	//根据公式生成64位W'
-	res += XOR(res.substr(0 * 8, 8), res.substr((0 + 4) * 8, 8));
-	res += XOR(res.substr(1 * 8, 8), res.substr((1 + 4) * 8, 8));
-	res += XOR(res.substr(2 * 8, 8), res.substr((2 + 4) * 8, 8));
-	res += XOR(res.substr(3 * 8, 8), res.substr((3 + 4) * 8, 8));
-	res += XOR(res.substr(4 * 8, 8), res.substr((4 + 4) * 8, 8));
-	res += XOR(res.substr(5 * 8, 8), res.substr((5 + 4) * 8, 8));
-	res += XOR(res.substr(6 * 8, 8), res.substr((6 + 4) * 8, 8));
-	res += XOR(res.substr(7 * 8, 8), res.substr((7 + 4) * 8, 8));
-	res += XOR(res.substr(8 * 8, 8), res.substr((8 + 4) * 8, 8));
-	res += XOR(res.substr(9 * 8, 8), res.substr((9 + 4) * 8, 8));
-	res += XOR(res.substr(10 * 8, 8), res.substr((10 + 4) * 8, 8));
-	res += XOR(res.substr(11 * 8, 8), res.substr((11 + 4) * 8, 8));
-	res += XOR(res.substr(12 * 8, 8), res.substr((12 + 4) * 8, 8));
-	res += XOR(res.substr(13 * 8, 8), res.substr((13 + 4) * 8, 8));
-	res += XOR(res.substr(14 * 8, 8), res.substr((14 + 4) * 8, 8));
-	res += XOR(res.substr(15 * 8, 8), res.substr((15 + 4) * 8, 8));
-	res += XOR(res.substr(16 * 8, 8), res.substr((16 + 4) * 8, 8));
-	res += XOR(res.substr(17 * 8, 8), res.substr((17 + 4) * 8, 8));
-	res += XOR(res.substr(18 * 8, 8), res.substr((18 + 4) * 8, 8));
-	res += XOR(res.substr(19 * 8, 8), res.substr((19 + 4) * 8, 8));
-	res += XOR(res.substr(20 * 8, 8), res.substr((20 + 4) * 8, 8));
-	res += XOR(res.substr(21 * 8, 8), res.substr((21 + 4) * 8, 8));
-	res += XOR(res.substr(22 * 8, 8), res.substr((22 + 4) * 8, 8));
-	res += XOR(res.substr(23 * 8, 8), res.substr((23 + 4) * 8, 8));
-	res += XOR(res.substr(24 * 8, 8), res.substr((24 + 4) * 8, 8));
-	res += XOR(res.substr(25 * 8, 8), res.substr((25 + 4) * 8, 8));
-	res += XOR(res.substr(26 * 8, 8), res.substr((26 + 4) * 8, 8));
-	res += XOR(res.substr(27 * 8, 8), res.substr((27 + 4) * 8, 8));
-	res += XOR(res.substr(28 * 8, 8), res.substr((28 + 4) * 8, 8));
-	res += XOR(res.substr(29 * 8, 8), res.substr((29 + 4) * 8, 8));
-	res += XOR(res.substr(30 * 8, 8), res.substr((30 + 4) * 8, 8));
-	res += XOR(res.substr(31 * 8, 8), res.substr((31 + 4) * 8, 8));
-	res += XOR(res.substr(32 * 8, 8), res.substr((32 + 4) * 8, 8));
-	res += XOR(res.substr(33 * 8, 8), res.substr((33 + 4) * 8, 8));
-	res += XOR(res.substr(34 * 8, 8), res.substr((34 + 4) * 8, 8));
-	res += XOR(res.substr(35 * 8, 8), res.substr((35 + 4) * 8, 8));
-	res += XOR(res.substr(36 * 8, 8), res.substr((36 + 4) * 8, 8));
-	res += XOR(res.substr(37 * 8, 8), res.substr((37 + 4) * 8, 8));
-	res += XOR(res.substr(38 * 8, 8), res.substr((38 + 4) * 8, 8));
-	res += XOR(res.substr(39 * 8, 8), res.substr((39 + 4) * 8, 8));
-	res += XOR(res.substr(40 * 8, 8), res.substr((40 + 4) * 8, 8));
-	res += XOR(res.substr(41 * 8, 8), res.substr((41 + 4) * 8, 8));
-	res += XOR(res.substr(42 * 8, 8), res.substr((42 + 4) * 8, 8));
-	res += XOR(res.substr(43 * 8, 8), res.substr((43 + 4) * 8, 8));
-	res += XOR(res.substr(44 * 8, 8), res.substr((44 + 4) * 8, 8));
-	res += XOR(res.substr(45 * 8, 8), res.substr((45 + 4) * 8, 8));
-	res += XOR(res.substr(46 * 8, 8), res.substr((46 + 4) * 8, 8));
-	res += XOR(res.substr(47 * 8, 8), res.substr((47 + 4) * 8, 8));
-	res += XOR(res.substr(48 * 8, 8), res.substr((48 + 4) * 8, 8));
-	res += XOR(res.substr(49 * 8, 8), res.substr((49 + 4) * 8, 8));
-	res += XOR(res.substr(50 * 8, 8), res.substr((50 + 4) * 8, 8));
-	res += XOR(res.substr(51 * 8, 8), res.substr((51 + 4) * 8, 8));
-	res += XOR(res.substr(52 * 8, 8), res.substr((52 + 4) * 8, 8));
-	res += XOR(res.substr(53 * 8, 8), res.substr((53 + 4) * 8, 8));
-	res += XOR(res.substr(54 * 8, 8), res.substr((54 + 4) * 8, 8));
-	res += XOR(res.substr(55 * 8, 8), res.substr((55 + 4) * 8, 8));
-	res += XOR(res.substr(56 * 8, 8), res.substr((56 + 4) * 8, 8));
-	res += XOR(res.substr(57 * 8, 8), res.substr((57 + 4) * 8, 8));
-	res += XOR(res.substr(58 * 8, 8), res.substr((58 + 4) * 8, 8));
-	res += XOR(res.substr(59 * 8, 8), res.substr((59 + 4) * 8, 8));
-	res += XOR(res.substr(60 * 8, 8), res.substr((60 + 4) * 8, 8));
-	res += XOR(res.substr(61 * 8, 8), res.substr((61 + 4) * 8, 8));
-	res += XOR(res.substr(62 * 8, 8), res.substr((62 + 4) * 8, 8));
-	res += XOR(res.substr(63 * 8, 8), res.substr((63 + 4) * 8, 8));
-	/*
-	cout << "W0',W1',……,W63'：" << endl;
-	cout << res.substr(544 + 0 + 0, 8) << "  ";
-	cout << res.substr(544 + 0 + 8, 8) << "  ";
-	cout << res.substr(544 + 0 + 16, 8) << "  ";
-	cout << res.substr(544 + 0 + 24, 8) << "  ";
-	cout << res.substr(544 + 0 + 32, 8) << "  ";
-	cout << res.substr(544 + 0 + 40, 8) << "  ";
-	cout << res.substr(544 + 0 + 48, 8) << "  ";
-	cout << res.substr(544 + 0 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(544 + 64 + 0, 8) << "  ";
-	cout << res.substr(544 + 64 + 8, 8) << "  ";
-	cout << res.substr(544 + 64 + 16, 8) << "  ";
-	cout << res.substr(544 + 64 + 24, 8) << "  ";
-	cout << res.substr(544 + 64 + 32, 8) << "  ";
-	cout << res.substr(544 + 64 + 40, 8) << "  ";
-	cout << res.substr(544 + 64 + 48, 8) << "  ";
-	cout << res.substr(544 + 64 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(544 + 128 + 0, 8) << "  ";
-	cout << res.substr(544 + 128 + 8, 8) << "  ";
-	cout << res.substr(544 + 128 + 16, 8) << "  ";
-	cout << res.substr(544 + 128 + 24, 8) << "  ";
-	cout << res.substr(544 + 128 + 32, 8) << "  ";
-	cout << res.substr(544 + 128 + 40, 8) << "  ";
-	cout << res.substr(544 + 128 + 48, 8) << "  ";
-	cout << res.substr(544 + 128 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(544 + + 0, 8) << "  ";
-	cout << res.substr(544 + 192 + 8, 8) << "  ";
-	cout << res.substr(544 + 192 + 16, 8) << "  ";
-	cout << res.substr(544 + 192 + 24, 8) << "  ";
-	cout << res.substr(544 + 192 + 32, 8) << "  ";
-	cout << res.substr(544 + 192 + 40, 8) << "  ";
-	cout << res.substr(544 + 192 + 48, 8) << "  ";
-	cout << res.substr(544 + 192 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(544 + 256 + 0, 8) << "  ";
-	cout << res.substr(544 + 256 + 8, 8) << "  ";
-	cout << res.substr(544 + 256 + 16, 8) << "  ";
-	cout << res.substr(544 + 256 + 24, 8) << "  ";
-	cout << res.substr(544 + 256 + 32, 8) << "  ";
-	cout << res.substr(544 + 256 + 40, 8) << "  ";
-	cout << res.substr(544 + 256 + 48, 8) << "  ";
-	cout << res.substr(544 + 256 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(544 + 320 + 0, 8) << "  ";
-	cout << res.substr(544 + 320 + 8, 8) << "  ";
-	cout << res.substr(544 + 320 + 16, 8) << "  ";
-	cout << res.substr(544 + 320 + 24, 8) << "  ";
-	cout << res.substr(544 + 320 + 32, 8) << "  ";
-	cout << res.substr(544 + 320 + 40, 8) << "  ";
-	cout << res.substr(544 + 320 + 48, 8) << "  ";
-	cout << res.substr(544 + 320 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(544 + 384 + 0, 8) << "  ";
-	cout << res.substr(544 + 384 + 8, 8) << "  ";
-	cout << res.substr(544 + 384 + 16, 8) << "  ";
-	cout << res.substr(544 + 384 + 24, 8) << "  ";
-	cout << res.substr(544 + 384 + 32, 8) << "  ";
-	cout << res.substr(544 + 384 + 40, 8) << "  ";
-	cout << res.substr(544 + 384 + 48, 8) << "  ";
-	cout << res.substr(544 + 384 + 56, 8) << "  ";
-	cout << endl;
-	cout << res.substr(544 + 448 + 0, 8) << "  ";
-	cout << res.substr(544 + 448 + 8, 8) << "  ";
-	cout << res.substr(544 + 448 + 16, 8) << "  ";
-	cout << res.substr(544 + 448 + 24, 8) << "  ";
-	cout << res.substr(544 + 448 + 32, 8) << "  ";
-	cout << res.substr(544 + 448 + 40, 8) << "  ";
-	cout << res.substr(544 + 448 + 48, 8) << "  ";
-	cout << res.substr(544 + 448 + 56, 8) << "  ";
-	cout << endl;
-	*/
-	/*
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			cout << res.substr(544 + i * 64 + j * 8, 8) << "  ";
+			//cout << res.substr(i * 64 + j * 8, 8) << "  ";
 		}
-		cout << endl;
+		//cout << endl;
 	}
-	cout << endl;*/
+	//cout << res.substr(512, 8) << "  " << res.substr(520, 8) << "  " << res.substr(528, 8) << "  " << res.substr(536, 8) << endl;
+	//cout << endl;
+	for (int i = 0; i < 64; i++) {//根据公式生成64位W'值
+		res += XOR(res.substr(i * 8, 8), res.substr((i + 4) * 8, 8));
+	}
+	//cout << "W0',W1',……,W63'：" << endl;
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			//cout << res.substr(544 + i * 64 + j * 8, 8) << "  ";
+		}
+		//cout << endl;
+	}
+	//cout << endl;
 	return res;
 }
 
